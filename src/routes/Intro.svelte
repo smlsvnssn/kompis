@@ -28,11 +28,6 @@
 		display: block;
 	}
 
-	.personer {
-		width: 100%;
-		overflow: scroll;
-	}
-
 	.intro {
 		display: grid;
 		gap: 1.5rem;
@@ -42,13 +37,5 @@
 
 		height: fit-content;
 		padding: 1rem;
-	}
-
-	.total {
-		display: grid;
-		gap: 1.5rem;
-
-		position: sticky;
-		bottom: 0;
 	}
 </style>

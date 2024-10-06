@@ -23,7 +23,7 @@
 			/>
 		{:else}
 			<a href="#" onclick={() => (isEditingName = true)}>
-				{person.namn ?? ö.capitalise(person.namn)}
+				{ö.when(person.namn, ö.capitalise(person.namn))}
 			</a>
 		{/if}
 		<a

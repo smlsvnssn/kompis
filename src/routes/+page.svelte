@@ -1,10 +1,9 @@
 <script>
-	import Intro from './Intro.svelte'
-
 	import '../style.scss'
 	import * as ö from 'ouml'
 	import autoAnimate from '@formkit/auto-animate'
 
+	import Intro from './Intro.svelte'
 	import Header from './Header.svelte'
 	import PersonCard from './PersonCard.svelte'
 	import Total from './Total.svelte'
@@ -35,13 +34,16 @@
 		)
 	)
 
-	let hasSeenIntro = $state(false)
+	let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
+	//let hasSeenIntro = $state(false)
+
+	const closeIntro = () => (hasSeenIntro = true)
 
 	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
 </script>
 
 {#if !hasSeenIntro}
-	<Intro onclick={() => (hasSeenIntro = true)} />
+	<Intro onclick={closeIntro} />
 {:else}
 	<Header {personer} />
 
@@ -58,35 +60,15 @@
 {/if}
 
 <style lang="scss">
-	.kompis,
-	button,
-	h1,
-	p {
-		margin: auto;
-		width: fit-content;
-		display: block;
-	}
-
 	.personer {
 		width: 100%;
 		overflow: scroll;
-		margin-top: -.5rem;
-	}
-
-	.intro {
-		display: grid;
-		gap: 1.5rem;
-
-		grid-row: 2 / 2;
-		align-self: center;
-
-		height: fit-content;
-		padding: 1rem;
+		margin-top: -0.5rem;
 	}
 
 	.total {
 		display: grid;
-		gap: 1.5rem;
+		gap: 1rem;
 
 		position: sticky;
 		bottom: 0;

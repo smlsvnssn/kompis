@@ -1,7 +1,7 @@
 <script>
 	import * as ö from 'ouml'
 	import autoAnimate from '@formkit/auto-animate'
-	import { fly, fade } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition'
 
 	import KamratKompis from './KamratKompis.svelte'
 
@@ -28,7 +28,7 @@
 
 <div class="infoBox" use:autoAnimate>
 	{#if showBubble}
-		<div class="bubble" in:fly={{ y: -400, opacity:0 }} >
+		<div class="bubble" in:fly={{ y: -400, opacity: 0 }}>
 			<div class="card">
 				<p>Det ska vara enkelt att dela rättvist!</p>
 				<p>Fyll i ditt namn, och namnen på dem du vill dela med.</p>
@@ -38,13 +38,7 @@
 				</p>
 			</div>
 
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="40"
-				height="40"
-				viewBox="0 0 40 40"
-				fill="none"
-			>
+			<svg width="40" height="40" viewBox="0 0 40 40">
 				<path
 					d="M40 40C12.6061 40 0 15.7576 0 0H40C19.3939 20.9091 36.1616 38.1818 40 40Z"
 				/>
@@ -54,7 +48,7 @@
 
 	<a href="#" aria-label="info" onclick={toggleBubble} class="kompis">
 		{#if showBubble}
-			<span></span>
+			<span />
 		{:else}
 			<span transition:fade>Kamrat Kompis®</span>
 		{/if}

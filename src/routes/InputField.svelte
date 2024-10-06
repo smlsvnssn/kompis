@@ -1,5 +1,5 @@
 <script>
-		import {clickoutside} from 'ouml/övents'
+	import { clickoutside } from 'ouml/övents'
 
 	let { label, value = $bindable(), type = 'text', ...handlers } = $props()
 
@@ -55,9 +55,6 @@
 			&:hover,
 			&:focus {
 				border-color: var(--primary);
-			}
-			&:focus {
-				outline: none;
 			}
 		}
 	}

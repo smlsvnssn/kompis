@@ -38,6 +38,11 @@ input {
 	box-sizing: inherit;
 }
 
+*:focus-visible {
+		outline: 2px solid var(--primary);
+		border-radius: .25rem
+	}
+
 body {
 	background: var(--bg);
 	height: 100%;
