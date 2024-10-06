@@ -1,3 +1,16 @@
+## TODO
+fixa minusknapp för personer utan namn
+animationer och transitions
+Förklara beräkningen tydligare.
+Credits to lhli
+fixa vy för pwa-installation(?)
+x textfält som numeric
+x layout för lista + total
+x scrollskuggor
+x fixa localStorage för personer, hasSeenIntro och hasSeenBubble
+x ikon för pwa
+x fixa manifest, serviceworker
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).

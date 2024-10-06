@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:ital,opsz@0,14..32;1,14..32&display=swap');
+
+:root {
+	--bg: radial-gradient(
+			circle at center,
+			rgba(0, 0, 0, 0) 0%,
+			rgba(0, 0, 0, 0.1) 100%
+		),
+		#d50000;
+	--white: #fff;
+	--secondary: #c10101;
+	--primary: #facb30;
+	--sans: 'Inter', sans-serif;
+	--display: 'Bricolage Grotesque', sans-serif;
+}
+
+html {
+	width: 100%;
+	height: 100%;
+	display: grid;
+}
+
+html,
+input {
+	box-sizing: border-box;
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+
+	color: var(--white);
+	font-family: var(--sans);
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	background: var(--bg);
+	height: 100%;
+	width: clamp(0%, 100%, 35rem);
+	margin: auto;
+
+	overflow: hidden;
+
+	padding: 1rem;
+	padding-top: 1.5rem;
+
+	display: grid;
+	grid-template-rows: min-content 1fr min-content;
+	gap: 1.5rem;
+
+	color: var(--white);
+
+	@media (width < 800px) {
+	}
+}
+
+a {
+	color: var(--primary);
+}
+
+p {
+	margin: 0;
+}
+
+h1 {
+	font-family: var(--display);
+}
+
+ul,
+li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+svg {
+	display: block;
+}
+
+button {
+	background: var(--primary);
+	color: var(--secondary);
+
+	cursor: pointer;
+
+	transition: all 0.3s;
+
+	font-family: var(--display);
+	font-size: 1.5rem;
+	font-weight: 700;
+
+	padding: 1rem 2rem;
+
+	border-radius: 10rem;
+	border: none;
+
+	&:hover {
+		scale: 1.1;
+	}
+}
+
+.card {
+	display: grid;
+
+	overflow: hidden;
+	padding: 1rem;
+	gap: 0.5rem;
+	border-radius: 1rem;
+	background: rgba(255, 255, 255, 0.2);
+}
+
+.hasScrollShadows {
+	overflow-y: auto;
+	scroll-timeline: --scroll-timeline y;
+
+	//margin-top: -1rem;
+	//margin-bottom: -1rem;
+	animation: detect-scroll;
+	animation-timeline: --scroll-timeline;
+	animation-fill-mode: none;
+
+	&:before,
+	&:after {
+		content: '';
+		display: block;
+		position: sticky;
+		left: 0em;
+		right: 0em;
+		height: 0.5rem;
+
+		--visibility-if-can-scroll: var(--can-scroll) visible;
+		--visibility-if-cant-scroll: hidden;
+		visibility: var(
+			--visibility-if-can-scroll,
+			var(--visibility-if-cant-scroll)
+		);
+
+		animation-name: reveal;
+		animation-timeline: --scroll-timeline;
+		animation-fill-mode: both;
+	}
+
+	&:before {
+		animation-range: 0em 10em;
+
+		top: 0;
+		background: radial-gradient(farthest-side at 50% 0, #61000066, #61000000);
+	}
+
+	&:after {
+		animation-direction: reverse;
+		animation-range: calc(100% - 10em) calc(100%);
+
+		bottom: 0;
+		background: radial-gradient(
+			farthest-side at 50% 100%,
+			#61000066,
+			#61000000
+		);
+	}
+}
+
+.hasScrollShadows {
+	--scrollbarBG: transparent;
+	--thumbBG: var(--secondary);
+
+	scrollbar-width: thin;
+	scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+.hasScrollShadows::-webkit-scrollbar {
+	width: 6px;
+}
+.hasScrollShadows::-webkit-scrollbar-track {
+	background: var(--scrollbarBG);
+}
+.hasScrollShadows::-webkit-scrollbar-thumb {
+	background-color: var(--thumbBG);
+	border-radius: 6px;
+	border: 3px solid var(--scrollbarBG);
+}
+
+@keyframes reveal {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes detect-scroll {
+	from,
+	to {
+		--can-scroll: ;
+	}
+}
