@@ -74,7 +74,7 @@
 <div class="card">
 	<div class="total">
 		<span class="label">Total utgift: </span>
-		{totalUtgift}
+		{ö.prettyNumber(totalUtgift)}
 	</div>
 	{#if totalUtgift > 0}
 		<div>
