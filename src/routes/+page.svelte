@@ -1,10 +1,11 @@
 <script>
+	import Intro from './Intro.svelte'
+
 	import '../style.scss'
 	import * as ö from 'ouml'
 	import autoAnimate from '@formkit/auto-animate'
 
-	import KamratKompis from './KamratKompis.svelte'
-	import InfoBox from './InfoBox.svelte'
+	import Header from './Header.svelte'
 	import PersonCard from './PersonCard.svelte'
 	import Total from './Total.svelte'
 	import AddPerson from './AddPerson.svelte'
@@ -25,6 +26,8 @@
 			ö.times(2, () => new Person())
 	)
 
+	const addPerson = () => personer.push(new Person())
+
 	$effect(() =>
 		ö.setLocal(
 			'personer',
@@ -32,29 +35,17 @@
 		)
 	)
 
-	let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
+	let hasSeenIntro = $state(false)
 
 	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
 </script>
 
 {#if !hasSeenIntro}
-	<div class="intro">
-		<div class="kompis">
-			<KamratKompis />
-		</div>
-
-		<h1>Kamrat Kompis®</h1>
-		<p>
-			Hej kamrat! Kamrat Kompis® förenklar din vardagsekonomi genom att låta
-			var och en bidra efter förmåga, och få tillbaka efter behov. Det är
-			jättelätt att komma igång!
-		</p>
-		<button onclick={() => (hasSeenIntro = true)}> Kom igång </button>
-	</div>
+	<Intro onclick={() => (hasSeenIntro = true)} />
 {:else}
-	<InfoBox {personer} />
+	<Header {personer} />
 
-	<ul class="persons hasScrollShadows" use:autoAnimate>
+	<ul class="personer hasScrollShadows" use:autoAnimate>
 		{#each personer as person}
 			<PersonCard {person} bind:personer />
 		{/each}
@@ -62,7 +53,7 @@
 
 	<div class="total">
 		<Total {personer} />
-		<AddPerson onclick={() => personer.push(new Person())} />
+		<AddPerson onclick={addPerson} />
 	</div>
 {/if}
 
@@ -76,9 +67,10 @@
 		display: block;
 	}
 
-	.persons {
+	.personer {
 		width: 100%;
 		overflow: scroll;
+		margin-top: -.5rem;
 	}
 
 	.intro {

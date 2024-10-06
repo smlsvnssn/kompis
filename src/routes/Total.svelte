@@ -7,49 +7,51 @@
 	let totalInkomst = $derived(ö.pipe(ö.map(personer, 'inkomst'), ö.sum))
 
 	let checksAndBalances = $derived(
-		personer.map((person) => ({
-			namn: person.namn,
+		personer.map((person, i) => ({
+			namn: person.namn ? person.namn : `Person ${i + 1}`,
 			summa: (person.inkomst / totalInkomst) * totalUtgift - person.utgift
 		}))
 	)
 
 	const betalaTill = (person, skaFåBetalt) => {
-			person.skaBetalaTill = []
+		person.skaBetalaTill = []
 
-			for (let p of skaFåBetalt) {
-				if (p.summa > 0) {
-					if (p.summa <= person.summa) {
-						person.skaBetalaTill.push({ namn: p.namn, summa: p.summa })
-						person.summa -= p.summa
-						p.summa = 0
-					} else {
-						person.skaBetalaTill.push({ namn: p.namn, summa: person.summa })
-						p.summa -= person.summa
-						person.summa = 0
-					}
+		for (let p of skaFåBetalt) {
+			if (p.summa > 0) {
+				if (p.summa <= person.summa) {
+					person.skaBetalaTill.push({ namn: p.namn, summa: p.summa })
+					person.summa -= p.summa
+					p.summa = 0
+				} else {
+					person.skaBetalaTill.push({ namn: p.namn, summa: person.summa })
+					p.summa -= person.summa
+					person.summa = 0
 				}
-				if (person.summa == 0) break
 			}
-
-			return person
+			if (person.summa == 0) break
 		}
 
+		return person
+	}
+
 	let output = $derived.by(() => {
+		const normaliseSum = (p) => ({ ...p, summa: ö.round(Math.abs(p.summa), 2) })
+
 		let skaBetala = ö.clone(
 			checksAndBalances
 				.filter((person) => person.summa > 0)
 				.sort((a, b) => b.summa - a.summa)
-				.map((p) => ({ ...p, summa: ö.round(p.summa, 2) }))
+				.map(normaliseSum)
 		)
 
 		let skaFåBetalt = ö.clone(
 			checksAndBalances
 				.filter((person) => person.summa < 0)
 				.sort((a, b) => a.summa - b.summa)
-				.map((p) => ({ ...p, summa: ö.round(-p.summa, 2) }))
+				.map(normaliseSum)
 		)
 
-		return skaBetala.map(person => betalaTill(person, skaFåBetalt))
+		return skaBetala.map((person) => betalaTill(person, skaFåBetalt))
 	})
 
 	const formatName = (name) => ö.pipe(name, ö.stripTags, ö.capitalise)
@@ -67,7 +69,6 @@
 			''
 		)
 	)
-
 </script>
 
 <div class="card">
@@ -88,7 +89,7 @@
 		font-family: var(--display);
 		font-weight: 600;
 		font-size: 1.5rem;
-		
+
 		:global(span.amount) {
 			font-weight: 800;
 			color: var(--primary);

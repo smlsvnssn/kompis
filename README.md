@@ -1,6 +1,6 @@
 ## TODO
-fixa minusknapp för personer utan namn
-animationer och transitions
+x fixa minusknapp för personer utan namn
+x animationer och transitions
 Förklara beräkningen tydligare.
 Credits to lhli
 fixa vy för pwa-installation(?)

@@ -1,6 +1,5 @@
 <script>
 	import InputField from './InputField.svelte'
-	import autoAnimate from '@formkit/auto-animate'
 	import * as ö from 'ouml'
 
 	let { person, personer = $bindable() } = $props()
@@ -17,27 +16,30 @@
 				label="Namn"
 				bind:value={person.namn}
 				onfocusout={() => person.namn && (isEditingName = false)}
+				onclickoutside={ö.debounce(
+					() => isEditingName && person.namn && (isEditingName = false),
+					0
+				)}
 			/>
 		{:else}
-			<a href="#" onclick={() => (isEditingName = true)}
-				>{ö.capitalise(person.namn)}</a
-			>
-
-			<a
-				href="#"
-				class="removePerson"
-				onclick={removePerson}
-				aria-label="Ta bort"
-			>
-				<svg width="12" height="13" viewBox="0 0 12 13">
-					<rect y="5.5" width="12" height="2" />
-				</svg>
+			<a href="#" onclick={() => (isEditingName = true)}>
+				{person.namn ?? ö.capitalise(person.namn)}
 			</a>
 		{/if}
+		<a
+			href="#"
+			class="removePerson {ö.when(isEditingName, 'editing')}"
+			onclick={removePerson}
+			aria-label="Ta bort"
+		>
+			<svg width="12" height="12" viewBox="0 0 12 13">
+				<rect y="5.5" width="12" height="2" />
+			</svg>
+		</a>
 	</div>
 
-	<InputField label="Inkomst" type='number' bind:value={person.inkomst} />
-	<InputField label="Utgift" type='number' bind:value={person.utgift} />
+	<InputField label="Inkomst" type="number" bind:value={person.inkomst} />
+	<InputField label="Utgift" type="number" bind:value={person.utgift} />
 </li>
 
 <style lang="scss">
@@ -45,6 +47,8 @@
 		grid: auto-flow / 1fr 1fr;
 
 		margin-bottom: 1rem;
+
+		position: relative;
 
 		.namn {
 			grid-column: span 2;
@@ -68,6 +72,12 @@
 				height: fit-content;
 
 				transition: all 0.3s;
+
+				&.editing {
+					position: absolute;
+					right: 1.5rem;
+					top: 2.875rem;
+				}
 
 				&:hover {
 					scale: 1.1;

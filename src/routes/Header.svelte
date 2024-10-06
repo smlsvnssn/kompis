@@ -1,6 +1,7 @@
 <script>
 	import * as ö from 'ouml'
 	import autoAnimate from '@formkit/auto-animate'
+	import { fly, fade } from 'svelte/transition';
 
 	import KamratKompis from './KamratKompis.svelte'
 
@@ -27,7 +28,7 @@
 
 <div class="infoBox" use:autoAnimate>
 	{#if showBubble}
-		<div class="bubble">
+		<div class="bubble" in:fly={{ y: -400, opacity:0 }} >
 			<div class="card">
 				<p>Det ska vara enkelt att dela rättvist!</p>
 				<p>Fyll i ditt namn, och namnen på dem du vill dela med.</p>
@@ -55,17 +56,17 @@
 		{#if showBubble}
 			<span></span>
 		{:else}
-			<span>Kamrat Kompis®</span>
+			<span transition:fade>Kamrat Kompis®</span>
 		{/if}
-		<KamratKompis size="56" />
+		<KamratKompis size="48" />
 	</a>
 </div>
 
 <style lang="scss">
 	.infoBox {
-		display: grid;
+		//display: grid;
 		justify-items: end;
-		padding-top: 0.5rem;
+		margin-bottom: -0.5rem;
 
 		.kompis {
 			width: 100%;

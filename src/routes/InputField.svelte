@@ -1,4 +1,6 @@
 <script>
+		import {clickoutside} from 'ouml/övents'
+
 	let { label, value = $bindable(), type = 'text', ...handlers } = $props()
 
 	const selectOnfocus = (e) => e.target.select()
@@ -12,6 +14,7 @@
 		inputmode={type == 'number' ? 'numeric' : 'text'}
 		bind:value
 		onfocus={selectOnfocus}
+		use:clickoutside
 		{...handlers}
 	/>
 </div>
