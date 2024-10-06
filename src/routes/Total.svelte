@@ -63,9 +63,16 @@
 			(out, person, i, a) =>
 				(out += `${formatName(person.namn)} ska betala ${person.skaBetalaTill.reduce(
 					(out, person, i, a) =>
-						(out += `${formatAmount(person.summa)} till ${formatName(person.namn)}${i < a.length - 1 ? ' och ' : ''}`),
+						(out += `${formatAmount(person.summa)} till ${formatName(person.namn)}${ö.when(
+							i < a.length - 1,
+							' och '
+						)}`),
 					''
-				)}${i < a.length - 1 ? ', och ' : '.'}`),
+				)}${
+					i < a.length - 2 ? ', '
+					: i < a.length - 1 ? ', och '
+					: '.'
+				}`),
 			''
 		)
 	)
