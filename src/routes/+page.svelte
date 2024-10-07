@@ -47,10 +47,13 @@
 	const closeModal = () => modal.close()
 </script>
 
+
+
 {#if !hasSeenIntro}
-	<Intro onclick={closeIntro} />
+<Intro onclick={closeIntro} />
 {:else}
-	<Header {personer} />
+<Dialog bind:modal {closeModal} />
+<Header {personer} />
 
 	<ul class="personer hasScrollShadows" use:autoAnimate>
 		{#each personer as person}
@@ -68,9 +71,8 @@
 			<AddPerson onclick={addPerson} />
 		</div>
 	</div>
-
-	<Dialog bind:modal {closeModal} />
 {/if}
+
 
 <style lang="scss">
 	.personer {
