@@ -1,3 +1,5 @@
+![Kamrat kompis](./kamrat-kompis.svg | width="300")
+
 ### Så funkar Kamrat Kompis®
 
 Kamrat Kompis® förenklar din vardagsekonomi genom att låta var och en bidra efter förmåga, och få tillbaka efter behov. Det är jättelätt att komma igång!
