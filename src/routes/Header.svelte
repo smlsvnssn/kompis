@@ -84,7 +84,8 @@
 				color: var(--secondary);
 				background: var(--boxBg);
 				margin-bottom: 0;
-				padding: 1.5rem;
+				padding: 1rem;
+				font-size: .875rem;
 			}
 			svg {
 				margin-right: 4rem;

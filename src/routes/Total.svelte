@@ -1,5 +1,8 @@
 <script>
 	import * as ö from 'ouml'
+	import {fade} from 'svelte/transition'
+
+	import CopyIcon from './CopyIcon.svelte'
 
 	let { personer } = $props()
 
@@ -76,31 +79,91 @@
 			''
 		)
 	)
+
+	let textTotal
+	let textSkaBetala
+	let textIsCopied = $state(false)
+
+	const copy = () => {
+		navigator.clipboard.writeText(
+			`${ö.stripTags(textTotal.innerHTML)}
+${ö.stripTags(textSkaBetala.innerHTML)}`
+		)
+		textIsCopied = true
+		setTimeout(() => (textIsCopied = false), 600)
+	}
 </script>
 
-<div class="card">
-	<div class="total">
+<a href="#" class="card {ö.when(textIsCopied, 'copied')}" onclick={copy} aria-label="Kopiera">
+	<div class="total" bind:this={textTotal}>
 		<span class="label">Total utgift: </span>
-		{ö.prettyNumber(totalUtgift)}
+
+		{#if textIsCopied}
+			<span class="label" transition:fade={{duration: 300}}>Texten kopierad!</span>
+		{/if}
+
+		<div class="totalAmount">
+			{ö.prettyNumber(totalUtgift)}
+			<div class="copy">
+				<CopyIcon />
+			</div>
+		</div>
 	</div>
 	{#if totalUtgift > 0}
-		<div>
+		<div bind:this={textSkaBetala}>
 			{@html formatted}
 		</div>
 	{/if}
-</div>
+</a>
 
 <style lang="scss">
 	.card {
 		grid: auto-flow / 1fr;
 		font-family: var(--display);
 		font-weight: 600;
-		font-size: 1.5rem;
+		font-size: 1.25rem;
+
+		color: var(--white);
+		text-decoration: none;
+		transition: all .6s;
 
 		:global(span.amount) {
 			font-weight: 800;
 			color: var(--primary);
 			//font-size: 1.75rem;
+		}
+
+		&.copied {
+			scale: 1.03;
+			background: rgba(255, 255, 255, 0.3);
+		}
+
+		.copy {
+			padding: 0.375rem;
+			background: rgba(255, 255, 255, 0.3);
+			border-radius: 100%;
+
+			height: fit-content;
+
+			transition: all 0.3s;
+
+			&.editing {
+				position: absolute;
+				right: 1.5rem;
+				top: 2.875rem;
+			}
+
+			&:hover {
+				scale: 1.1;
+			}
+
+			svg {
+				display: block;
+
+				rect {
+					fill: var(--secondary);
+				}
+			}
 		}
 
 		.total {
@@ -119,6 +182,11 @@
 				text-decoration: none;
 				color: var(--white);
 			}
+		}
+
+		.totalAmount {
+			display: flex;
+			gap: 0.5rem;
 		}
 	}
 </style>

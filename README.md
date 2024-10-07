@@ -1,52 +1,9 @@
-## TODO
-Kopiera output vid klick
-x fixa minusknapp för personer utan namn
-x animationer och transitions
-Förklara beräkningen tydligare.
-Credits to lhli
-fixa vy för pwa-installation(?)
-x textfält som numeric
-x layout för lista + total
-x scrollskuggor
-x fixa localStorage för personer, hasSeenIntro och hasSeenBubble
-x ikon för pwa
-x fixa manifest, serviceworker
+### Så funkar Kamrat Kompis®
 
-# create-svelte
+Kamrat Kompis® förenklar din vardagsekonomi genom att låta var och en bidra efter förmåga, och få tillbaka efter behov. Det är jättelätt att komma igång!
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+I vanliga fall, när du ska dela på en krognota, på månadens utgifter, eller på ett bilköp, gör du det förmodligen lätt för dig. Ni är kanske två som ska dela, så ni delar på hälften. Eller så är ni tre, kliar er lite i huvudet, och lyckas dela jämnt på tre.
 
-## Creating a project
+Kamrat Kompis® gör lite annorlunda, men det är lika lätt! Du får fylla i inkomst för alla som ska dela, och vem som lagt ut vad. Sedan ser Kamrat Kompis® till att alla får betala i proportion till sin andel av den totala inkomsten, minus dina egna utgifter förstås. (Vilken sorts inkomst spelar ingen roll, det kan vara månadsinkomst, årsinkomst, total förmögenhet eller vad du vill, bara det är samma sorts inkomst för alla.)
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Ni får en praktisk lista på vem som ska betala vad till vem, som går att kopiera för att skicka i ett sms eller en chatt. Sedan är det bara att swisha, eller plocka fram sedelbuntarna. Lycka till!

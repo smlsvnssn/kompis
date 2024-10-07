@@ -8,6 +8,7 @@
 	import PersonCard from './PersonCard.svelte'
 	import Total from './Total.svelte'
 	import AddPerson from './AddPerson.svelte'
+	import Dialog from './Dialog.svelte'
 
 	class Person {
 		constructor({ namn = '', inkomst = 0, utgift = 0 } = {}) {
@@ -40,6 +41,10 @@
 	const closeIntro = () => (hasSeenIntro = true)
 
 	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
+
+	let modal = $state()
+	const openModal = () => modal.showModal()
+	const closeModal = () => modal.close()
 </script>
 
 {#if !hasSeenIntro}
@@ -55,8 +60,16 @@
 
 	<div class="total">
 		<Total {personer} />
-		<AddPerson onclick={addPerson} />
+		<div class="footer">
+			<div class="info">
+				<a href="https://lhli.net" target="_blank">lhli.net</a>
+				<a href="#" onclick={openModal}>Så funkar det</a>
+			</div>
+			<AddPerson onclick={addPerson} />
+		</div>
 	</div>
+
+	<Dialog bind:modal {closeModal} />
 {/if}
 
 <style lang="scss">
@@ -72,5 +85,20 @@
 
 		position: sticky;
 		bottom: 0;
+
+		.footer {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.info {
+				display: flex;
+				gap: 0.5rem;
+
+				font-family: var(--display);
+				font-weight: 600;
+				font-size: 0.875rem;
+			}
+		}
 	}
 </style>

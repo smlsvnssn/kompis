@@ -53,7 +53,7 @@
 		.namn {
 			grid-column: span 2;
 			font-family: var(--display);
-			font-size: 1.5rem;
+			font-size: 1.25rem;
 			font-weight: 600;
 			display: flex;
 			justify-content: space-between;
