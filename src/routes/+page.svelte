@@ -42,12 +42,14 @@
 
 	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
 
-	let modal = $state()
-	const openModal = () => modal.showModal()
-	const closeModal = () => modal.close()
+	let modalIsActive = $state(false)
+	const openModal = () => modalIsActive = true
+	const closeModal = () => modalIsActive = false
 </script>
 
-<Dialog bind:modal {closeModal} />
+{#if modalIsActive}
+	<Dialog {closeModal} />
+{/if}
 
 {#if !hasSeenIntro}
 	<Intro onclick={closeIntro} />
