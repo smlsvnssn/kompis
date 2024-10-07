@@ -1,4 +1,4 @@
-![Kamrat kompis](./kamrat-kompis.svg | width="300")
+<img src="./kamrat-kompis.svg" width="250">
 
 ### Så funkar Kamrat Kompis®
 
