@@ -1,14 +1,13 @@
 <script>
-	import {fly} from 'svelte/transition'
+	import { fly } from 'svelte/transition'
 
 	import KamratKompis from './KamratKompis.svelte'
-
 
 	let { closeModal } = $props()
 </script>
 
 <div class="backdrop" transition:fly>
-	<div class="modal" transition:fly={{y:-100}}>
+	<div class="modal" transition:fly={{ y: -100 }}>
 		<KamratKompis />
 		<h1>Så funkar Kamrat Kompis®</h1>
 		<p>
@@ -47,7 +46,10 @@
 		backdrop-filter: blur(0.5rem);
 		position: fixed;
 		inset: 0;
+		height: 100%;
 		z-index: 100;
+		padding: 1rem;
+		overflow-y: scroll;
 
 		display: grid;
 		place-items: center;
@@ -56,8 +58,10 @@
 			border-radius: 0.5rem;
 			border: none;
 			padding: 1.5rem;
-			inset: 1rem;
 
+			overflow-y: scroll;
+
+			max-height: 100%;
 			max-width: 30rem;
 			filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.1))
 				drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
