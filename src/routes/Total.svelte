@@ -1,6 +1,6 @@
 <script>
 	import * as ö from 'ouml'
-	import {fade} from 'svelte/transition'
+	import { fade } from 'svelte/transition'
 
 	import CopyIcon from './CopyIcon.svelte'
 
@@ -9,7 +9,7 @@
 	let totalUtgift = $derived(ö.pipe(ö.map(personer, 'utgift'), ö.sum))
 	let totalInkomst = $derived(ö.pipe(ö.map(personer, 'inkomst'), ö.sum))
 
-	let checksAndBalances = $derived(
+	let balansräkning = $derived(
 		personer.map((person, i) => ({
 			namn: person.namn ? person.namn : `Person ${i + 1}`,
 			summa: (person.inkomst / totalInkomst) * totalUtgift - person.utgift
@@ -37,18 +37,18 @@
 		return person
 	}
 
-	let output = $derived.by(() => {
+	let transaktioner = $derived.by(() => {
 		const normaliseSum = (p) => ({ ...p, summa: ö.round(Math.abs(p.summa), 2) })
 
 		let skaBetala = ö.clone(
-			checksAndBalances
+			balansräkning
 				.filter((person) => person.summa > 0)
 				.sort((a, b) => b.summa - a.summa)
 				.map(normaliseSum)
 		)
 
 		let skaFåBetalt = ö.clone(
-			checksAndBalances
+			balansräkning
 				.filter((person) => person.summa < 0)
 				.sort((a, b) => a.summa - b.summa)
 				.map(normaliseSum)
@@ -58,20 +58,24 @@
 	})
 
 	const formatName = (name) => ö.pipe(name, ö.stripTags, ö.capitalise)
+
 	const formatAmount = (n) =>
 		ö.pipe(n, ö.prettyNumber, (n) => `<span class=amount>${n}</span>`)
 
-	let formatted = $derived(
-		output.reduce(
+	const formatPayees = (person) =>
+		person.skaBetalaTill.reduce(
 			(out, person, i, a) =>
-				(out += `${formatName(person.namn)} ska betala ${person.skaBetalaTill.reduce(
-					(out, person, i, a) =>
-						(out += `${formatAmount(person.summa)} till ${formatName(person.namn)}${ö.when(
-							i < a.length - 1,
-							' och '
-						)}`),
-					''
-				)}${
+				(out += `${formatAmount(person.summa)} till ${formatName(person.namn)}${ö.when(
+					i < a.length - 1,
+					' och '
+				)}`),
+			''
+		)
+
+	let formatted = $derived(
+		transaktioner.reduce(
+			(out, person, i, a) =>
+				(out += `${formatName(person.namn)} ska betala ${formatPayees(person)}${
 					i < a.length - 2 ? ', '
 					: i < a.length - 1 ? ', och '
 					: '.'
@@ -84,22 +88,29 @@
 	let textSkaBetala
 	let textIsCopied = $state(false)
 
-	const copy = () => {
+	const copyText = () => {
 		navigator.clipboard.writeText(
-			`${ö.stripTags(textTotal.innerHTML)}
-${ö.stripTags(textSkaBetala.innerHTML)}`
+			`${textTotal.innerText.replace('\n', ' ')}
+${textSkaBetala.innerText}`
 		)
 		textIsCopied = true
 		setTimeout(() => (textIsCopied = false), 600)
 	}
 </script>
 
-<a href="#" class="card {ö.when(textIsCopied, 'copied')}" onclick={copy} aria-label="Kopiera">
+<a
+	href="#"
+	class="card {ö.when(textIsCopied, 'copied')}"
+	onclick={copyText}
+	aria-label="Kopiera"
+>
 	<div class="total" bind:this={textTotal}>
 		<span class="label">Total utgift: </span>
 
 		{#if textIsCopied}
-			<span class="label" transition:fade={{duration: 300}}>Texten kopierad!</span>
+			<span class="label" transition:fade={{ duration: 300 }}>
+				Texten kopierad!
+			</span>
 		{/if}
 
 		<div class="totalAmount">
@@ -125,7 +136,7 @@ ${ö.stripTags(textSkaBetala.innerHTML)}`
 
 		color: var(--white);
 		text-decoration: none;
-		transition: all .6s;
+		transition: all 0.6s;
 
 		:global(span.amount) {
 			font-weight: 800;
@@ -146,12 +157,6 @@ ${ö.stripTags(textSkaBetala.innerHTML)}`
 			height: fit-content;
 
 			transition: all 0.3s;
-
-			&.editing {
-				position: absolute;
-				right: 1.5rem;
-				top: 2.875rem;
-			}
 
 			&:hover {
 				scale: 1.1;

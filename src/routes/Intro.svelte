@@ -15,8 +15,12 @@
 		familj och dina kompisar dela rättvist på notan, hyran, bilen eller båten.
 		Alla bidrar efter förmåga, och får tillbaka efter behov.
 	</p>
-	<p>Det är jättelätt att komma igång!</p>
-	
+	<p>
+		Fyll bara i ditt namn, och namnen på dem du vill dela med. Därefter fyller
+		du i inkomster (till exempel månadsinkomst) och utgifter för var och en, och
+		får direkt summan var och en ska betala. Enkelt!
+	</p>
+
 	<button {...handlers}> Kom igång </button>
 </div>
 

@@ -21,11 +21,13 @@
 		utgift = $state()
 	}
 
-	let defaults = [
-		new Person({ namn: 'Till exempel Arne', inkomst: 30000, utgift: 5000 }),
-		new Person({ inkomst: 50000, utgift: 5000 }),
-		new Person()
-	]
+	// let defaults = [
+	// 	new Person({ namn: 'Till exempel Arne', inkomst: 30000, utgift: 5000 }),
+	// 	new Person({ inkomst: 50000, utgift: 5000 }),
+	// 	new Person()
+	// ]
+
+	let defaults = ö.times(2, () => new Person())
 
 	let personer = $state(
 		ö.getLocal('personer')?.map((person) => new Person(person)) ?? defaults
@@ -59,7 +61,7 @@
 {#if !hasSeenIntro}
 	<Intro onclick={closeIntro} />
 {:else}
-	<Header {personer} {defaults}/>
+	<Header />
 
 	<ul class="personer hasScrollShadows" use:autoAnimate>
 		{#each personer as person}

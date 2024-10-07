@@ -6,8 +6,21 @@
 	let { closeModal } = $props()
 </script>
 
-<div class="backdrop" transition:fly>
-	<div class="modal" transition:fly={{ y: -100 }}>
+<div
+	class="backdrop"
+	transition:fly
+	onclick={closeModal}
+	role="button"
+	tabindex="0"
+	onkeydown={(e) => {
+		if (e.key == 'Escape') closeModal()
+	}}
+>
+	<div
+		class="modal"
+		transition:fly={{ y: -100 }}
+		onclick={(e) => e.stopPropagation()}
+	>
 		<KamratKompis />
 		<h1>Så funkar Kamrat Kompis®</h1>
 		<p>
@@ -30,13 +43,7 @@
 			swisha, eller plocka fram sedelbuntarna. Lycka till!
 		</p>
 
-		<button
-			onclick={closeModal}
-			type="button"
-			class="btn btn-primary btn-sm-block"
-		>
-			Toppen, jag fattar!
-		</button>
+		<button onclick={closeModal} type="button"> Toppen, jag fattar! </button>
 	</div>
 </div>
 
@@ -75,6 +82,7 @@
 
 			h1 {
 				margin: 0;
+				text-align: center;
 			}
 
 			p {
@@ -86,7 +94,6 @@
 				margin: auto;
 				margin-top: 1rem;
 				margin-bottom: 0.25rem;
-				display: block !important;
 			}
 		}
 	}

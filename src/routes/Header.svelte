@@ -1,31 +1,12 @@
 <script>
-	import * as ö from 'ouml'
 	import autoAnimate from '@formkit/auto-animate'
 	import { fly, fade } from 'svelte/transition'
 
 	import KamratKompis from './KamratKompis.svelte'
 
-	let { personer, defaults } = $props()
+	let showBubble = $state(false)
 
-	let hasSeenBubble = $state(ö.getLocal('hasSeenBubble') ?? false)
-
-	$effect(() => {
-		// Sets to true when list has changed
-		if (!ö.equals($state.snapshot(personer), defaults)) ö.setLocal('hasSeenBubble', true)
-	})
-
-	$effect(() => ö.log(ö.equals(personer, defaults)))
-	$effect(() => ö.log($state.snapshot(personer)))
-
-	let bubbleManuallyActivated = $state(false)
-
-	const toggleBubble = () => {
-		hasSeenBubble = true
-		bubbleManuallyActivated = !bubbleManuallyActivated
-	}
-	let showBubble = $derived(
-		(!hasSeenBubble && ö.equals(personer, defaults)) || bubbleManuallyActivated
-	)
+	const toggleBubble = () => (showBubble = !showBubble)
 </script>
 
 <div class="infoBox" use:autoAnimate>
