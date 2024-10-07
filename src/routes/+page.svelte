@@ -66,7 +66,7 @@
 		<Total {personer} />
 		<div class="footer">
 			<div class="info">
-				<a href="https://lhli.net" target="_blank">lhli.net</a>
+				<span>🄯 <a href="https://lhli.net" target="_blank">lhli.net</a></span>
 				<a href="#" onclick={openModal}>Så funkar det</a>
 			</div>
 			<AddPerson onclick={addPerson} />

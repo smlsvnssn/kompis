@@ -3,7 +3,7 @@
 	"short_name": "Kompis®",
 	"theme_color": "#c10101",
 	"background_color": "#c10101",
-	"display": "standalone",
+	"display": "fullscreen",
 	"id": "kamratkompis",
 	"start_url": "/",
 	"icons": [
