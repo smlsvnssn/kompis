@@ -13,7 +13,7 @@
 		<p>
 			I vanliga fall, när du ska dela på en krognota, på månadens utgifter,
 			eller på ett bilköp, gör du det förmodligen lätt för dig. Ni är kanske två
-			som ska dela, så ni delar på hälften. Eller så är ni tre, kliar er lite i
+			som ska dela, så ni delar på hälften. Eller så är ni tre, kliar er i
 			huvudet, och lyckas dela jämnt på tre.
 		</p>
 		<p>

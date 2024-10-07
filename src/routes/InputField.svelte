@@ -1,7 +1,13 @@
 <script>
 	import { clickoutside } from 'ouml/övents'
 
-	let { label, value = $bindable(), type = 'text', ...handlers } = $props()
+	let {
+		label,
+		value = $bindable(),
+		placeholder = '',
+		type = 'text',
+		...handlers
+	} = $props()
 
 	const selectOnfocus = (e) => e.target.select()
 </script>
@@ -12,6 +18,7 @@
 		{type}
 		id={label}
 		inputmode={type == 'number' ? 'numeric' : 'text'}
+		{placeholder}
 		bind:value
 		onfocus={selectOnfocus}
 		use:clickoutside
@@ -46,6 +53,11 @@
 			transition: all 0.3s;
 
 			appearance: none;
+
+			&::placeholder {
+				color: color-mix(in srgb, var(--white), #fff0);
+				font-size: .875rem;
+			}
 
 			&::-webkit-outer-spin-button,
 			&::-webkit-inner-spin-button {

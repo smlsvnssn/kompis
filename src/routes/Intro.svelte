@@ -11,10 +11,12 @@
 
 	<h1>Kamrat Kompis®</h1>
 	<p>
-		Hej kamrat! Kamrat Kompis® förenklar din vardagsekonomi genom att låta var
-		och en bidra efter förmåga, och få tillbaka efter behov. Det är jättelätt
-		att komma igång!
+		Hej! Kamrat Kompis® förenklar din vardagsekonomi genom att låta dig, din
+		familj och dina kompisar dela rättvist på notan, hyran, bilen eller båten.
+		Alla bidrar efter förmåga, och får tillbaka efter behov.
 	</p>
+	<p>Det är jättelätt att komma igång!</p>
+	
 	<button {...handlers}> Kom igång </button>
 </div>
 

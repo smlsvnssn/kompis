@@ -21,9 +21,14 @@
 		utgift = $state()
 	}
 
+	let defaults = [
+		new Person({ namn: 'Till exempel Arne', inkomst: 30000, utgift: 5000 }),
+		new Person({ inkomst: 50000, utgift: 5000 }),
+		new Person()
+	]
+
 	let personer = $state(
-		ö.getLocal('personer')?.map((person) => new Person(person)) ??
-			ö.times(2, () => new Person())
+		ö.getLocal('personer')?.map((person) => new Person(person)) ?? defaults
 	)
 
 	const addPerson = () => personer.push(new Person())
@@ -35,16 +40,16 @@
 		)
 	)
 
-	let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
-	//let hasSeenIntro = $state(false)
+	//let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
+	let hasSeenIntro = $state(false)
 
 	const closeIntro = () => (hasSeenIntro = true)
 
 	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
 
 	let modalIsActive = $state(false)
-	const openModal = () => modalIsActive = true
-	const closeModal = () => modalIsActive = false
+	const openModal = () => (modalIsActive = true)
+	const closeModal = () => (modalIsActive = false)
 </script>
 
 {#if modalIsActive}
@@ -54,7 +59,7 @@
 {#if !hasSeenIntro}
 	<Intro onclick={closeIntro} />
 {:else}
-	<Header {personer} />
+	<Header {personer} {defaults}/>
 
 	<ul class="personer hasScrollShadows" use:autoAnimate>
 		{#each personer as person}

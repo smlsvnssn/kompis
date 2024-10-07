@@ -5,24 +5,26 @@
 
 	import KamratKompis from './KamratKompis.svelte'
 
-	let { personer } = $props()
+	let { personer, defaults } = $props()
 
 	let hasSeenBubble = $state(ö.getLocal('hasSeenBubble') ?? false)
 
 	$effect(() => {
-		// Sets to true when list has seen two named persons
-		if (personer.filter(({ namn }) => namn.length).length >= 2)
-			ö.setLocal('hasSeenBubble', true)
+		// Sets to true when list has changed
+		if (!ö.equals($state.snapshot(personer), defaults)) ö.setLocal('hasSeenBubble', true)
 	})
+
+	$effect(() => ö.log(ö.equals(personer, defaults)))
+	$effect(() => ö.log($state.snapshot(personer)))
 
 	let bubbleManuallyActivated = $state(false)
 
-	const toggleBubble = () =>
-		(bubbleManuallyActivated = !bubbleManuallyActivated)
-
+	const toggleBubble = () => {
+		hasSeenBubble = true
+		bubbleManuallyActivated = !bubbleManuallyActivated
+	}
 	let showBubble = $derived(
-		(!hasSeenBubble && personer.filter(({ namn }) => namn.length).length < 2) ||
-			bubbleManuallyActivated
+		(!hasSeenBubble && ö.equals(personer, defaults)) || bubbleManuallyActivated
 	)
 </script>
 
@@ -30,11 +32,14 @@
 	{#if showBubble}
 		<div class="bubble" in:fly={{ y: -400, opacity: 0 }}>
 			<div class="card">
-				<p>Det ska vara enkelt att dela rättvist!</p>
-				<p>Fyll i ditt namn, och namnen på dem du vill dela med.</p>
 				<p>
-					Därefter fyller du i inkomster och utgifter för var och en, och får
-					direkt summan var och en ska betala. Enkelt!
+					Det ska vara enkelt att dela rättvist! Fyll bara i ditt namn, och
+					namnen på dem du vill dela med.
+				</p>
+				<p>
+					Därefter fyller du i inkomster (till exempel månadsinkomst) och
+					utgifter för var och en, och får direkt summan var och en ska betala.
+					Enkelt!
 				</p>
 			</div>
 
@@ -85,7 +90,7 @@
 				background: var(--boxBg);
 				margin-bottom: 0;
 				padding: 1rem;
-				font-size: .875rem;
+				font-size: 0.875rem;
 			}
 			svg {
 				margin-right: 4rem;

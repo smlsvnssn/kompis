@@ -14,6 +14,7 @@
 		{#if isEditingName}
 			<InputField
 				label="Namn"
+				placeholder='Ditt eller någon annans namn här'
 				bind:value={person.namn}
 				onfocusout={() => person.namn && (isEditingName = false)}
 				onclickoutside={ö.debounce(
