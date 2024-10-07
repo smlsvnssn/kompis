@@ -40,8 +40,8 @@
 		)
 	)
 
-	//let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
-	let hasSeenIntro = $state(false)
+	let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
+	//let hasSeenIntro = $state(false)
 
 	const closeIntro = () => (hasSeenIntro = true)
 
