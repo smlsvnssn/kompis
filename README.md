@@ -1,4 +1,5 @@
 ## TODO
+Kopiera output vid klick
 x fixa minusknapp för personer utan namn
 x animationer och transitions
 Förklara beräkningen tydligare.

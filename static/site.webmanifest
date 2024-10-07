@@ -4,7 +4,7 @@
 	"theme_color": "#c10101",
 	"background_color": "#c10101",
 	"display": "standalone",
-	"id": "kamratKompis",
+	"id": "kamratkompis",
 	"start_url": "/",
 	"icons": [
 		{
