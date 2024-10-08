@@ -12,7 +12,7 @@ export class Person {
 }
 
 export const getTransactions = personer => {
-	const normaliseSum = p => ({ ...p, summa: ö.round(Math.abs(p.summa), 2) })
+	const normaliseSum = p => ({ ...p, summa: ö.round(Math.abs(p.summa), 0) })
 
 	const betalaTill = (gäldenär, borgenärer) => {
 		gäldenär.skaBetalaTill = []

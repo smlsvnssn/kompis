@@ -16,7 +16,7 @@
 	role="button"
 	tabindex="0"
 	onclick={closeModal}
-	onkeydown={(e) => {
+	onkeydown={e => {
 		if (e.key == 'Escape') closeModal()
 	}}
 >
@@ -26,8 +26,8 @@
 		transition:fly={{ y: -100 }}
 		role="button"
 		tabindex="0"
-		onclick={(e) => e.stopPropagation()}
-		onkeydown={(e) => {
+		onclick={e => e.stopPropagation()}
+		onkeydown={e => {
 			if (e.key == 'Escape') closeModal()
 		}}
 	>
@@ -48,13 +48,19 @@
 			förmögenhet eller vad du vill, bara det är samma sorts inkomst för alla.)
 		</p>
 		<p>
+			Så här till exempel: Berit har köpt ett kylskåp för 10 000. Arne och Berit
+			vill dela rättvist på kostnaden. Arne tjänar 30 000 i månaden, och Berit
+			tjänar 50 000. De skriver in sina uppgifter, och får veta att Arne ska
+			betala 3 750 till Berit.
+		</p>
+		<p>
 			Ni får en praktisk lista på vem som ska betala vad till vem, som går att
 			kopiera för att skicka i ett sms eller en chatt. Sedan är det bara att
 			swisha, eller plocka fram sedelbuntarna. Lycka till!
 		</p>
 
 		<button onclick={closeModal} type="button"> Toppen, jag fattar! </button>
-		<p class=footer>
+		<p class="footer">
 			Byggd med 🩸, 😅 & 😭 av
 			<a href="https://lhli.net" target="_blank"> lhli.net </a>. 🄯 2024
 		</p>
@@ -103,7 +109,7 @@
 				width: 100%;
 				font-size: 0.875rem;
 			}
-			
+
 			.footer {
 				margin-top: 2rem;
 				text-align: center;

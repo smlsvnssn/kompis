@@ -9,9 +9,7 @@
 
 	let totalUtgift = $derived(ö.pipe(ö.map(personer, 'utgift'), ö.sum))
 
-	let transaktioner = $derived(getTransactions(personer))
-
-	let formatted = $derived(formatTransactions(transaktioner))
+	let formatted = $derived(ö.pipe(personer, getTransactions, formatTransactions))
 
 	let textTotal
 	let textIsCopied = $state(false)
