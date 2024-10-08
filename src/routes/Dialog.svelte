@@ -4,24 +4,34 @@
 	import KamratKompis from './KamratKompis.svelte'
 
 	let { closeModal } = $props()
+
+	let modalEl
+
+	$effect(() => modalEl.focus())
 </script>
 
 <div
 	class="backdrop"
 	transition:fly
-	onclick={closeModal}
 	role="button"
 	tabindex="0"
+	onclick={closeModal}
 	onkeydown={(e) => {
 		if (e.key == 'Escape') closeModal()
 	}}
 >
 	<div
 		class="modal"
+		bind:this={modalEl}
 		transition:fly={{ y: -100 }}
+		role="button"
+		tabindex="0"
 		onclick={(e) => e.stopPropagation()}
+		onkeydown={(e) => {
+			if (e.key == 'Escape') closeModal()
+		}}
 	>
-		<KamratKompis />
+		<KamratKompis opacity="1" />
 		<h1>Så funkar Kamrat Kompis®</h1>
 		<p>
 			I vanliga fall, när du ska dela på en krognota, på månadens utgifter,
@@ -44,6 +54,10 @@
 		</p>
 
 		<button onclick={closeModal} type="button"> Toppen, jag fattar! </button>
+		<p class=footer>
+			Byggd med 🩸, 😅 & 😭 av
+			<a href="https://lhli.net" target="_blank"> lhli.net </a>. 🄯 2024
+		</p>
 	</div>
 </div>
 
@@ -88,6 +102,15 @@
 			p {
 				width: 100%;
 				font-size: 0.875rem;
+			}
+			
+			.footer {
+				margin-top: 2rem;
+				text-align: center;
+				font-size: 0.75rem;
+				a {
+					color: var(--secondary);
+				}
 			}
 
 			button {

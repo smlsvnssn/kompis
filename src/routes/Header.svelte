@@ -14,7 +14,7 @@
 		<div class="bubble" in:fly={{ y: -400, opacity: 0 }}>
 			<div class="card">
 				<p>
-					Det ska vara enkelt att dela rättvist! Fyll bara i ditt namn, och
+					Det ska vara enkelt att dela rättvist! Fyll i ditt namn, och
 					namnen på dem du vill dela med.
 				</p>
 				<p>
@@ -38,6 +38,7 @@
 		{:else}
 			<span transition:fade>Kamrat Kompis®</span>
 		{/if}
+		
 		<KamratKompis size="48" />
 	</a>
 </div>
@@ -73,9 +74,11 @@
 				padding: 1rem;
 				font-size: 0.875rem;
 			}
+
 			svg {
 				margin-right: 4rem;
 				margin-bottom: -1rem;
+
 				path {
 					fill: var(--boxBg);
 				}

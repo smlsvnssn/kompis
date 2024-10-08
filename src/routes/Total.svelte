@@ -1,98 +1,26 @@
 <script>
 	import * as ö from 'ouml'
 	import { fade } from 'svelte/transition'
+	import { getTransactions, formatTransactions } from './räkna.svelte'
 
 	import CopyIcon from './CopyIcon.svelte'
 
 	let { personer } = $props()
 
 	let totalUtgift = $derived(ö.pipe(ö.map(personer, 'utgift'), ö.sum))
-	let totalInkomst = $derived(ö.pipe(ö.map(personer, 'inkomst'), ö.sum))
 
-	let balansräkning = $derived(
-		personer.map((person, i) => ({
-			namn: person.namn ? person.namn : `Person ${i + 1}`,
-			summa: (person.inkomst / totalInkomst) * totalUtgift - person.utgift
-		}))
-	)
+	let transaktioner = $derived(getTransactions(personer))
 
-	const betalaTill = (person, skaFåBetalt) => {
-		person.skaBetalaTill = []
-
-		for (let p of skaFåBetalt) {
-			if (p.summa > 0) {
-				if (p.summa <= person.summa) {
-					person.skaBetalaTill.push({ namn: p.namn, summa: p.summa })
-					person.summa -= p.summa
-					p.summa = 0
-				} else {
-					person.skaBetalaTill.push({ namn: p.namn, summa: person.summa })
-					p.summa -= person.summa
-					person.summa = 0
-				}
-			}
-			if (person.summa == 0) break
-		}
-
-		return person
-	}
-
-	let transaktioner = $derived.by(() => {
-		const normaliseSum = (p) => ({ ...p, summa: ö.round(Math.abs(p.summa), 2) })
-
-		let skaBetala = ö.clone(
-			balansräkning
-				.filter((person) => person.summa > 0)
-				.sort((a, b) => b.summa - a.summa)
-				.map(normaliseSum)
-		)
-
-		let skaFåBetalt = ö.clone(
-			balansräkning
-				.filter((person) => person.summa < 0)
-				.sort((a, b) => a.summa - b.summa)
-				.map(normaliseSum)
-		)
-
-		return skaBetala.map((person) => betalaTill(person, skaFåBetalt))
-	})
-
-	const formatName = (name) => ö.pipe(name, ö.stripTags, ö.capitalise)
-
-	const formatAmount = (n) =>
-		ö.pipe(n, ö.prettyNumber, (n) => `<span class=amount>${n}</span>`)
-
-	const formatPayees = (person) =>
-		person.skaBetalaTill.reduce(
-			(out, person, i, a) =>
-				(out += `${formatAmount(person.summa)} till ${formatName(person.namn)}${ö.when(
-					i < a.length - 1,
-					' och '
-				)}`),
-			''
-		)
-
-	let formatted = $derived(
-		transaktioner.reduce(
-			(out, person, i, a) =>
-				(out += `${formatName(person.namn)} ska betala ${formatPayees(person)}${
-					i < a.length - 2 ? ', '
-					: i < a.length - 1 ? ', och '
-					: '.'
-				}`),
-			''
-		)
-	)
+	let formatted = $derived(formatTransactions(transaktioner))
 
 	let textTotal
-	let textSkaBetala
 	let textIsCopied = $state(false)
 
 	const copyText = () => {
 		navigator.clipboard.writeText(
-			`${textTotal.innerText.replace('\n', ' ')}
-${textSkaBetala.innerText}`
+			textTotal.innerText.replace('\n', ' ') + '\n' + formatted
 		)
+
 		textIsCopied = true
 		setTimeout(() => (textIsCopied = false), 600)
 	}
@@ -121,7 +49,7 @@ ${textSkaBetala.innerText}`
 		</div>
 	</div>
 	{#if totalUtgift > 0}
-		<div bind:this={textSkaBetala}>
+		<div>
 			{@html formatted}
 		</div>
 	{/if}

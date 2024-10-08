@@ -10,44 +10,42 @@
 	import AddPerson from './AddPerson.svelte'
 	import Dialog from './Dialog.svelte'
 
-	class Person {
-		constructor({ namn = '', inkomst = 0, utgift = 0 } = {}) {
-			this.namn = namn
-			this.inkomst = inkomst
-			this.utgift = utgift
-		}
-		namn = $state()
-		inkomst = $state()
-		utgift = $state()
-	}
+	import { Person } from './räkna.svelte'
 
-	// let defaults = [
-	// 	new Person({ namn: 'Till exempel Arne', inkomst: 30000, utgift: 5000 }),
-	// 	new Person({ inkomst: 50000, utgift: 5000 }),
-	// 	new Person()
-	// ]
+	/*
+	Personer
+	*/
 
 	let defaults = ö.times(2, () => new Person())
 
 	let personer = $state(
-		ö.getLocal('personer')?.map((person) => new Person(person)) ?? defaults
+		ö.getLocal('personer')?.map(person => new Person(person)) ?? defaults
 	)
 
 	const addPerson = () => personer.push(new Person())
 
-	$effect(() =>
+	$effect(() => {
 		ö.setLocal(
 			'personer',
 			personer.map(({ namn, inkomst, utgift }) => ({ namn, inkomst, utgift }))
 		)
-	)
+	})
+
+	/*
+	Intro
+	*/
 
 	let hasSeenIntro = $state(ö.getLocal('hasSeenIntro') ?? false)
-	//let hasSeenIntro = $state(false)
 
 	const closeIntro = () => (hasSeenIntro = true)
 
-	$effect(() => ö.setLocal('hasSeenIntro', hasSeenIntro))
+	$effect(() => {
+		ö.setLocal('hasSeenIntro', hasSeenIntro)
+	})
+
+	/*
+	Modal
+	*/
 
 	let modalIsActive = $state(false)
 	const openModal = () => (modalIsActive = true)
@@ -71,11 +69,9 @@
 
 	<div class="total">
 		<Total {personer} />
+
 		<div class="footer">
-			<div class="info">
-				<span>🄯 <a href="https://lhli.net" target="_blank">lhli.net</a></span>
-				<a href="#" onclick={openModal}>Så funkar det</a>
-			</div>
+			<a href="#" class="info" onclick={openModal}>Så funkar det</a>
 			<AddPerson onclick={addPerson} />
 		</div>
 	</div>
