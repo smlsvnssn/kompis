@@ -9,14 +9,16 @@
 
 	let totalUtgift = $derived(ö.pipe(ö.map(personer, 'utgift'), ö.sum))
 
-	let formatted = $derived(ö.pipe(personer, getTransactions, formatTransactions))
+	let formattedTransactions = $derived(
+		ö.pipe(personer, getTransactions, formatTransactions)
+	)
 
-	let textTotal
+	let textTotal, textDetails
 	let textIsCopied = $state(false)
 
 	const copyText = () => {
 		navigator.clipboard.writeText(
-			textTotal.innerText.replace('\n', ' ') + '\n' + formatted
+			textTotal.innerText.replace('\n', ' ') + '\n' + textDetails.innerText
 		)
 
 		textIsCopied = true
@@ -30,7 +32,7 @@
 	onclick={copyText}
 	aria-label="Kopiera"
 >
-	<div class="total" bind:this={textTotal}>
+	<div class="total" bind:this={textTotal} aria-live='polite'>
 		<span class="label">Total utgift: </span>
 
 		{#if textIsCopied}
@@ -46,9 +48,10 @@
 			</div>
 		</div>
 	</div>
+
 	{#if totalUtgift > 0}
-		<div>
-			{@html formatted}
+		<div bind:this={textDetails}>
+			{@html formattedTransactions}
 		</div>
 	{/if}
 </a>

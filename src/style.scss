@@ -12,6 +12,7 @@
 	--primary: #facb30;
 	--sans: 'Inter', sans-serif;
 	--display: 'Bricolage Grotesque', sans-serif;
+
 }
 
 html {
@@ -24,7 +25,8 @@ html {
 html,
 input {
 	box-sizing: border-box;
-
+	interpolate-size: allow-keywords;
+	
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
@@ -40,17 +42,15 @@ input {
 }
 
 *:focus-visible {
-		outline: 2px solid var(--primary);
-		border-radius: .25rem
-	}
+	outline: 2px solid var(--primary);
+	border-radius: 0.25rem;
+}
 
 body {
 	background: var(--bg);
 	height: 100%;
 	width: clamp(0%, 100%, 35rem);
 	margin: auto;
-
-	overflow: hidden;
 
 	padding: 1rem;
 
@@ -59,9 +59,6 @@ body {
 	gap: 1.5rem;
 
 	color: var(--white);
-
-	@media (width < 800px) {
-	}
 }
 
 a {
@@ -123,8 +120,6 @@ button {
 	overflow-y: auto;
 	scroll-timeline: --scroll-timeline y;
 
-	//margin-top: -1rem;
-	//margin-bottom: -1rem;
 	animation: detect-scroll;
 	animation-timeline: --scroll-timeline;
 	animation-fill-mode: none;
